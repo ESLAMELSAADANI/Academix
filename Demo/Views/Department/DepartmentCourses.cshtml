@@ -57,7 +57,7 @@
                                     <input type="hidden" asp-for="@Model.DeptName" />
                                     <input type="hidden" asp-for="@Model.Capacity" />
                                     <input type="hidden" name="courseID" value="@course.Id" />
-                                    <button type="submit" class="btn btn-outline-danger btn-sm fw-semibold">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm fw-semibold" onclick="return confirm('Are you sure you want to delete this Course ?');">
                                         <i class="bi bi-trash-fill"></i> Delete
                                     </button>
                                 </form>

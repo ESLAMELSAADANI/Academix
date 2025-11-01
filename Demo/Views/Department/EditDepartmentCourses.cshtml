@@ -101,7 +101,7 @@
 
         <!-- Buttons -->
         <div class="d-flex flex-column align-items-center mt-5 gap-3">
-            <button type="submit" class="btn btn-gradient px-5 py-2 fw-semibold">
+            <button type="submit" class="btn btn-gradient px-5 py-2 fw-semibold" onclick="return confirm('Are you sure ?');">
                 <i class="bi bi-check-circle"></i> Apply Changes
             </button>
             <a asp-action="Index" asp-controller="Department" class="btn btn-outline-secondary px-4 py-2">
