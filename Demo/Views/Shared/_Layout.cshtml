@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -27,11 +28,11 @@
 		}
 
 		main {
-			flex: 1 0 auto; /* Main takes available space */
+			flex: 1 0 auto;
 		}
 
 		footer {
-			flex-shrink: 0; /* Footer does not shrink */
+			flex-shrink: 0;
 			background: linear-gradient(145deg, #212529, #343a40);
 			color: #ccc;
 			text-align: center;
@@ -49,7 +50,6 @@
 					text-decoration: underline;
 				}
 
-		/* Navbar Enhancements */
 		.navbar-dark .navbar-nav .nav-link {
 			color: #f8f9fa;
 			transition: color 0.2s ease, transform 0.2s ease;
@@ -71,11 +71,14 @@
 				transform: translateY(-2px);
 			}
 
-		.navbar .badge.bg-danger {
-			font-size: 0.65rem;
-			padding: 0.25em 0.4em;
-			font-weight: 700;
+		.badge-admin {
+			background-color: #dc3545;
 		}
+		/* Red for admin */
+		.badge-user {
+			background-color: #198754;
+		}
+		/* Green for user */
 
 		.dropdown-menu {
 			border-radius: 10px;
@@ -98,8 +101,7 @@
 				margin-right: 8px;
 			}
 
-			.dropdown-item.selected,
-			.dropdown-item.active {
+			.dropdown-item.selected, .dropdown-item.active {
 				background-color: #0d6efd;
 				color: #fff;
 			}
@@ -118,49 +120,63 @@
 						aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
 
+				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item"> <a class="nav-link" asp-controller="Home" asp-action="Index"><i class="bi bi-house"></i> Home</a> </li>
 						<li class="nav-item"> <a class="nav-link" asp-controller="Home" asp-action="Privacy"><i class="bi bi-shield-lock"></i> Privacy</a> </li>
+
 						@if (User.Identity.IsAuthenticated)
 						{
-
 							<!-- Department Dropdown -->
 							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" id="departmentDropdown" role="button" data-bs-toggle="dropdown"> <i class="bi bi-building"></i> Department </a>
+								<a class="nav-link dropdown-toggle" href="#" id="departmentDropdown" role="button" data-bs-toggle="dropdown">
+									<i class="bi bi-building"></i> Department
+								</a>
 								<ul class="dropdown-menu" aria-labelledby="departmentDropdown">
 									<li><a class="dropdown-item d-flex align-items-center" asp-controller="Department" asp-action="Index"><i class="bi bi-list"></i> All Departments</a></li>
 									<li><a class="dropdown-item d-flex align-items-center" asp-controller="Department" asp-action="Create"><i class="bi bi-plus-circle"></i> Add Department</a></li>
 								</ul>
 							</li>
+
 							<!-- Student Dropdown -->
 							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" id="studentDropdown" role="button" data-bs-toggle="dropdown"> <i class="bi bi-person"></i> Student </a>
+								<a class="nav-link dropdown-toggle" href="#" id="studentDropdown" role="button" data-bs-toggle="dropdown">
+									<i class="bi bi-person"></i> Student
+								</a>
 								<ul class="dropdown-menu" aria-labelledby="studentDropdown">
 									<li><a class="dropdown-item d-flex align-items-center" asp-controller="Student" asp-action="Index"><i class="bi bi-list"></i> All Students</a></li>
 									<li><a class="dropdown-item d-flex align-items-center" asp-controller="Student" asp-action="Add"><i class="bi bi-person-plus"></i> Add Student</a></li>
 								</ul>
 							</li>
+
 							<!-- Course Dropdown -->
 							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" id="courseDropdown" role="button" data-bs-toggle="dropdown"> <i class="bi bi-journal-text"></i> Course </a>
+								<a class="nav-link dropdown-toggle" href="#" id="courseDropdown" role="button" data-bs-toggle="dropdown">
+									<i class="bi bi-journal-text"></i> Course
+								</a>
 								<ul class="dropdown-menu" aria-labelledby="courseDropdown">
 									<li><a class="dropdown-item d-flex align-items-center" asp-controller="Course" asp-action="Index"><i class="bi bi-list"></i> All Courses</a></li>
 									<li><a class="dropdown-item d-flex align-items-center" asp-controller="Course" asp-action="Add"><i class="bi bi-plus-circle"></i> Add Course</a></li>
 								</ul>
 							</li>
+
 							<!-- Users Dropdown -->
 							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" id="usersDropdown" role="button" data-bs-toggle="dropdown"> <i class="bi bi-people"></i> Users </a>
+								<a class="nav-link dropdown-toggle" href="#" id="usersDropdown" role="button" data-bs-toggle="dropdown">
+									<i class="bi bi-people"></i> Users
+								</a>
 								<ul class="dropdown-menu" aria-labelledby="usersDropdown">
 									<li><a class="dropdown-item d-flex align-items-center" asp-controller="User" asp-action="Index"><i class="bi bi-list"></i> All Users</a></li>
 									<li><a class="dropdown-item d-flex align-items-center" asp-controller="User" asp-action="Add"><i class="bi bi-person-plus"></i> Add User</a></li>
 								</ul>
 							</li>
+
 							<!-- Roles Dropdown -->
 							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" id="rolesDropdown" role="button" data-bs-toggle="dropdown"> <i class="bi bi-person-gear"></i> Roles </a>
+								<a class="nav-link dropdown-toggle" href="#" id="rolesDropdown" role="button" data-bs-toggle="dropdown">
+									<i class="bi bi-person-gear"></i> Roles
+								</a>
 								<ul class="dropdown-menu" aria-labelledby="rolesDropdown">
 									<li><a class="dropdown-item d-flex align-items-center" asp-controller="Role" asp-action="Index"><i class="bi bi-list"></i> All Roles</a></li>
 									<li><a class="dropdown-item d-flex align-items-center" asp-controller="Role" asp-action="Add"><i class="bi bi-plus-circle"></i> Add Role</a></li>
@@ -182,17 +198,18 @@
 						}
 						else
 						{
+							@* User Profile + Single Role Badge *@
 							<li class="nav-item me-3 position-relative">
 								<a class="nav-link navbar-profile" asp-controller="User" asp-action="Details" asp-route-id="@User.Claims.First().Value" title="Profile">
 									<i class="bi bi-person-circle fs-4"></i>
 								</a>
-								@* Show Admin badge *@
-								@if (User.IsInRole("Admin"))
-								{
-									<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-										Admin
-									</span>
+								@{
+									var roleClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value ?? "User";
+									var badgeClass = roleClaim.ToLower() == "admin" ? "badge-admin" : "badge-user";
 								}
+								<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill @badgeClass">
+									@roleClaim
+								</span>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" asp-controller="Account" asp-action="Logout"> <i class="bi bi-box-arrow-right"></i> Logout </a>
@@ -200,7 +217,6 @@
 						}
 					</ul>
 				</div>
-
 			</div>
 		</nav>
 	</header>

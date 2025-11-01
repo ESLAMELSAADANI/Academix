@@ -124,7 +124,7 @@ namespace Demo.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Login");
+            return RedirectToAction("index","Home");
         }
         public IActionResult AccessDenied()
         {
