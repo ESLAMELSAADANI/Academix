@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Demo.Migrations
 {
     [DbContext(typeof(ITIDbContext))]
-    [Migration("20251030145723_SeedTheAdmin")]
-    partial class SeedTheAdmin
+    [Migration("20251101204924_SeedAdminAsUserAndAttachItWithAdminRole")]
+    partial class SeedAdminAsUserAndAttachItWithAdminRole
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -172,9 +172,15 @@ namespace Demo.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DeptNo");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Students");
                 });
@@ -258,6 +264,16 @@ namespace Demo.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            Age = 23,
+                            Email = "eslam.saadany22@gmail.com",
+                            HashPassword = "AQAAAAIAAYagAAAAEHkAa9NAiymipqC0i/W3HV/QJp/Hz7NnFJHYUToNsldx1ZLiG1kcf/+M558SpIG2OQ==",
+                            UserName = "Eslam Elsaadany"
+                        });
                 });
 
             modelBuilder.Entity("ModelsLayer.UserRole", b =>
@@ -277,7 +293,7 @@ namespace Demo.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = 1,
+                            UserId = 2,
                             RoleId = 1
                         });
                 });
@@ -305,7 +321,15 @@ namespace Demo.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ModelsLayer.User", "User")
+                        .WithOne("Student")
+                        .HasForeignKey("ModelsLayer.Models.Student", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Department");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ModelsLayer.StudentCourse", b =>
@@ -368,6 +392,8 @@ namespace Demo.Migrations
 
             modelBuilder.Entity("ModelsLayer.User", b =>
                 {
+                    b.Navigation("Student");
+
                     b.Navigation("UsersRole");
                 });
 #pragma warning restore 612, 618

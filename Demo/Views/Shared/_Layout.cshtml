@@ -6,6 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>@ViewData["Title"] - Academix </title>
 
+	<!-- icon -->
+	<link rel="icon" type="image/png" href="~/icons/brain.png">
 	<!-- Bootstrap & Site Styles -->
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -105,6 +107,15 @@
 				background-color: #0d6efd;
 				color: #fff;
 			}
+
+		.navbar-brand img {
+			transition: transform 0.3s ease;
+		}
+
+		.navbar-brand:hover img {
+			transform: rotate(-10deg) scale(1.1);
+		}
+
 	</style>
 </head>
 <body>
@@ -112,8 +123,9 @@
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3">
 			<div class="container-fluid">
-				<a class="navbar-brand fw-bold text-uppercase" asp-controller="Home" asp-action="Index">
-					<i class="bi bi-rocket-takeoff"></i> Academix
+				<a class="navbar-brand fw-bold text-uppercase d-flex align-items-center gap-2" asp-controller="Home" asp-action="Index">
+					<img src="~/icons/brain.png" alt="Academix Logo" style="width:32px; height:32px;" />
+					Academix
 				</a>
 
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

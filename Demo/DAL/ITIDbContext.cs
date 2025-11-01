@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using ModelsLayer;
 using ModelsLayer.Models;
 using System.Data;
@@ -54,14 +55,26 @@ namespace Demo.DAL
             modelBuilder.Entity<Role>(r =>
             {
                 r.HasData(
-                    new Role() {Id=2, RoleName = "User" },
-                    new Role() {Id=3, RoleName = "Student" },
-                    new Role() {Id = 1, RoleName = "Admin" }
+                    new Role() { Id = 2, RoleName = "User" },
+                    new Role() { Id = 3, RoleName = "Student" },
+                    new Role() { Id = 1, RoleName = "Admin" }
                     );
+            });
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                Id = 2,
+                UserName = "Eslam Elsaadany",
+                Age = 23,
+                Email = "eslam.saadany22@gmail.com",
+                HashPassword = "AQAAAAIAAYagAAAAEHkAa9NAiymipqC0i/W3HV/QJp/Hz7NnFJHYUToNsldx1ZLiG1kcf/+M558SpIG2OQ=="
             });
             modelBuilder.Entity<UserRole>(ur =>
             {
-                ur.HasData(new UserRole() { UserId=1,RoleId=1});
+                ur.HasData(new UserRole()
+                {
+                    UserId = 2,
+                    RoleId = 1
+                });
             });
         }
     }
