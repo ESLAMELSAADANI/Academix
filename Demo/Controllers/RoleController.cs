@@ -36,9 +36,16 @@ namespace Demo.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Role role)
         {
+            var roleExist = await roleRepoExtra.IsRoleExistAsync(role.RoleName, role.Id);
+            if (roleExist)
+                ModelState.AddModelError("RoleName", "Role Already Exists!");
+
             if (ModelState.IsValid)
             {
-                roleRepo.Update(role);
+                //roleRepo.Update(role);//Conflict In Tracking
+                var existingRole = await roleRepo.GetByIdAsync(role.Id);
+                existingRole.RoleName = role.RoleName;
+                roleRepo.Update(existingRole);
                 await roleRepo.SaveChangesAsync();
                 return RedirectToAction("index");
             }
@@ -54,6 +61,9 @@ namespace Demo.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(Role model)
         {
+            var roleExist = await roleRepoExtra.IsRoleExistAsync(model.RoleName, model.Id);
+            if (roleExist)
+                ModelState.AddModelError("RoleName", "Role Already Exists!");
             if (ModelState.IsValid)
             {
                 await roleRepo.AddAsync(model);
@@ -77,25 +87,8 @@ namespace Demo.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> RoleExist([FromQuery(Name = "RoleName")] string roleName, [FromQuery(Name = "Id")] int id)
         {
-            // When adding a new Role (Id == 0)
-            if (id == 0)
-            {
-                bool roleExists = roleRepoExtra.IsRoleExist(roleName);
-                return Json(!roleExists); // true if role doesn't exist
-            }
-
-            // When editing an existing role
-            var existingRole = await roleRepoExtra.GetByNameAsync(roleName);
-
-            if (existingRole == null)
-                return Json(true); // Role doesn't exist in DB → valid
-
-            // Role exists but belongs to the same user being edited → valid
-            if (existingRole.Id == id)
-                return Json(true);
-
-            // Role exists and belongs to another user → invalid
-            return Json(false);
+            bool roleExist = await roleRepoExtra.IsRoleExistAsync(roleName, id);
+            return Json(!roleExist);
         }
     }
 }

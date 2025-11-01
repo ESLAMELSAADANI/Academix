@@ -6,7 +6,7 @@ namespace Demo.Repos
 {
     public interface IRoleRepoExtra : IEntityRepo<Role>
     {
-        public bool IsRoleExist(string roleName);
+        public Task<bool> IsRoleExistAsync(string roleName,int id);
         public Task<Role> GetByNameAsync(string roleName);
         public Task<List<Role>> GetUserRolesAsync(int userID);
         public Task<List<Role>> GetUserAnotherRolesAsync(int userID);
@@ -33,9 +33,27 @@ namespace Demo.Repos
             return dbContext.Roles.Include(r => r.UserRoles).Where(r => r.UserRoles.Any(ur => ur.UserId == userID)).ToListAsync();
         }
 
-        public bool IsRoleExist(string roleName)
+        public async Task<bool> IsRoleExistAsync(string roleName,int id)
         {
-            return dbContext.Roles.Any(r => r.RoleName == roleName);
+            // When adding a new Role (Id == 0)
+            if (id == 0)
+            {
+                bool roleExists = dbContext.Roles.Any(r => r.RoleName.ToLower() == roleName.ToLower());
+                return roleExists; // true if role exist
+            }
+
+            // When editing an existing role
+            var existingRole = await GetByNameAsync(roleName);
+
+            if (existingRole == null)
+                return false; // Role doesn't exist in DB → valid
+
+            // Role exists but belongs to the same user being edited → valid
+            if (existingRole.Id == id)
+                return false;
+
+            // Role exists and belongs to another user → invalid
+            return true;
         }
     }
 }

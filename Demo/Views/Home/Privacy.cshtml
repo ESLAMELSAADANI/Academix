@@ -1,6 +1,167 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary">@ViewData["Title"]</h1>
+    </div>
+
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <!-- Guest View -->
+        <div class="text-center py-5">
+            <p class="lead text-muted mb-4">
+                You need to <strong>log in</strong> to view the full privacy policy and understand how we protect your data.
+            </p>
+            <a asp-controller="Account" asp-action="Login" class="btn btn-primary btn-lg shadow-sm">
+                <i class="bi bi-box-arrow-in-right me-2"></i> Log In
+            </a>
+        </div>
+    }
+    else
+    {
+        <!-- Collapsible Policy Sections -->
+        <div class="accordion" id="privacyPolicyAccordion">
+
+            <!-- Data Collection -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingDataCollection">
+                    <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDataCollection" aria-expanded="true" aria-controls="collapseDataCollection">
+                        <i class="bi bi-file-earmark-person-fill text-primary me-2"></i> Data Collection
+                    </button>
+                </h2>
+                <div id="collapseDataCollection" class="accordion-collapse collapse show" aria-labelledby="headingDataCollection" data-bs-parent="#privacyPolicyAccordion">
+                    <div class="accordion-body text-muted">
+                        We collect only the data needed to provide our services efficiently:
+                        <ul>
+                            <li>Full name, email, and contact info</li>
+                            <li>Student enrollment and academic records</li>
+                            <li>User login credentials</li>
+                            <li>Cookies and site usage data</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Usage -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingDataUsage">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDataUsage" aria-expanded="false" aria-controls="collapseDataUsage">
+                        <i class="bi bi-lightning-fill text-success me-2"></i> Data Usage
+                    </button>
+                </h2>
+                <div id="collapseDataUsage" class="accordion-collapse collapse" aria-labelledby="headingDataUsage" data-bs-parent="#privacyPolicyAccordion">
+                    <div class="accordion-body text-muted">
+                        Your data helps us enhance your experience and streamline operations:
+                        <ul>
+                            <li>Personalized dashboards</li>
+                            <li>Secure login and role-based access</li>
+                            <li>Notifications and academic communications</li>
+                            <li>Platform performance analysis</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Sharing -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingDataSharing">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDataSharing" aria-expanded="false" aria-controls="collapseDataSharing">
+                        <i class="bi bi-people-fill text-warning me-2"></i> Data Sharing
+                    </button>
+                </h2>
+                <div id="collapseDataSharing" class="accordion-collapse collapse" aria-labelledby="headingDataSharing" data-bs-parent="#privacyPolicyAccordion">
+                    <div class="accordion-body text-muted">
+                        We respect your privacy. Data is only shared when:
+                        <ul>
+                            <li>Working with trusted partners</li>
+                            <li>Required by law</li>
+                            <li>Protecting platform security</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSecurity">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSecurity" aria-expanded="false" aria-controls="collapseSecurity">
+                        <i class="bi bi-shield-lock-fill text-danger me-2"></i> Security
+                    </button>
+                </h2>
+                <div id="collapseSecurity" class="accordion-collapse collapse" aria-labelledby="headingSecurity" data-bs-parent="#privacyPolicyAccordion">
+                    <div class="accordion-body text-muted">
+                        We safeguard your data with advanced security measures:
+                        <ul>
+                            <li>Encryption of sensitive data</li>
+                            <li>Regular audits and system updates</li>
+                            <li>Role-based access controls</li>
+                            <li>Protection against unauthorized access</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cookies -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingCookies">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCookies" aria-expanded="false" aria-controls="collapseCookies">
+                        <i class="bi bi-pie-chart-fill text-info me-2"></i> Cookies & Tracking
+                    </button>
+                </h2>
+                <div id="collapseCookies" class="accordion-collapse collapse" aria-labelledby="headingCookies" data-bs-parent="#privacyPolicyAccordion">
+                    <div class="accordion-body text-muted">
+                        We use cookies to improve your browsing experience:
+                        <ul>
+                            <li>Session management</li>
+                            <li>Usage analytics</li>
+                            <li>Personalized content suggestions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Your Rights -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingRights">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRights" aria-expanded="false" aria-controls="collapseRights">
+                        <i class="bi bi-person-check-fill text-secondary me-2"></i> Your Rights
+                    </button>
+                </h2>
+                <div id="collapseRights" class="accordion-collapse collapse" aria-labelledby="headingRights" data-bs-parent="#privacyPolicyAccordion">
+                    <div class="accordion-body text-muted">
+                        You have control over your data:
+                        <ul>
+                            <li>Access and correct your data</li>
+                            <li>Request deletion</li>
+                            <li>Withdraw consent for processing</li>
+                            <li>Opt out of marketing communications</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="text-center mt-5">
+            <h5 class="fw-bold mb-3">Questions About Our Privacy Policy?</h5>
+            <p class="text-muted mb-3">Contact our support team for inquiries regarding your personal data or this policy.</p>
+            <a href="mailto:support@academix.com" class="btn btn-primary btn-lg shadow-sm">
+                <i class="bi bi-envelope-fill me-2"></i> Contact Support
+            </a>
+        </div>
+    }
+</div>
+
+<style>
+    .accordion-button {
+        font-size: 1.1rem;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+        .accordion-button:hover {
+            background-color: rgba(13,110,253,0.1);
+            transform: translateX(3px);
+        }
+</style>

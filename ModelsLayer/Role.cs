@@ -12,7 +12,7 @@ namespace ModelsLayer
     {
         public int Id { get; set; }
         [Required]
-        [Remote("RoleExist", "Role", AdditionalFields = "Id", ErrorMessage = "This Role Exist In DB!")]
+        [Remote("RoleExist", "Role", AdditionalFields = "Id", ErrorMessage = "Role Already Exists!")]
         public string RoleName { get; set; }
 
         public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();

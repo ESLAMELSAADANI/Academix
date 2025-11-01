@@ -16,7 +16,7 @@
                     <label asp-for="CrsName" class="form-label fw-semibold">Course Name</label>
                     <div class="input-group">
                         <span class="input-group-text bg-light"><i class="bi bi-journal-text text-primary"></i></span>
-                        <input asp-for="CrsName" class="form-control form-control-lg rounded-end" placeholder="Enter course name..." />
+                        <input asp-for="CrsName" class="form-control form-control rounded-end" placeholder="Enter course name..." />
                     </div>
                     <span class="text-danger small" asp-validation-for="CrsName"></span>
                 </div>
@@ -25,16 +25,16 @@
                     <label asp-for="CrsDuration" class="form-label fw-semibold">Duration (Hours)</label>
                     <div class="input-group">
                         <span class="input-group-text bg-light"><i class="bi bi-hourglass-split text-warning"></i></span>
-                        <input asp-for="CrsDuration" class="form-control form-control-lg rounded-end" placeholder="Enter duration in hours..." />
+                        <input asp-for="CrsDuration" class="form-control form-control rounded-end" placeholder="Enter duration in hours..." />
                     </div>
                     <span class="text-danger small" asp-validation-for="CrsDuration"></span>
                 </div>
 
                 <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
-                    <button type="submit" class="btn btn-success btn-lg px-5 shadow-sm rounded-pill hover-lift">
+                    <button type="submit" class="btn btn-success px-5 shadow-sm rounded-pill hover-lift">
                         <i class="bi bi-plus-circle me-2"></i> Add Course
                     </button>
-                    <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-5 rounded-pill hover-lift">
+                    <a asp-action="Index" class="btn btn-outline-secondary px-5 rounded-pill hover-lift">
                         <i class="bi bi-arrow-left-circle me-2"></i> Cancel
                     </a>
                 </div>

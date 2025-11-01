@@ -71,6 +71,12 @@
 				transform: translateY(-2px);
 			}
 
+		.navbar .badge.bg-danger {
+			font-size: 0.65rem;
+			padding: 0.25em 0.4em;
+			font-weight: 700;
+		}
+
 		.dropdown-menu {
 			border-radius: 10px;
 			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
@@ -113,11 +119,14 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNav">
-					@if (User.Identity.IsAuthenticated)
-					{
-						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-							<li class="nav-item"> <a class="nav-link" asp-controller="Home" asp-action="Index"><i class="bi bi-house"></i> Home</a> </li>
-							<li class="nav-item"> <a class="nav-link" asp-controller="Home" asp-action="Privacy"><i class="bi bi-shield-lock"></i> Privacy</a> </li> <!-- Department Dropdown -->
+
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item"> <a class="nav-link" asp-controller="Home" asp-action="Index"><i class="bi bi-house"></i> Home</a> </li>
+						<li class="nav-item"> <a class="nav-link" asp-controller="Home" asp-action="Privacy"><i class="bi bi-shield-lock"></i> Privacy</a> </li>
+						@if (User.Identity.IsAuthenticated)
+						{
+
+							<!-- Department Dropdown -->
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="#" id="departmentDropdown" role="button" data-bs-toggle="dropdown"> <i class="bi bi-building"></i> Department </a>
 								<ul class="dropdown-menu" aria-labelledby="departmentDropdown">
@@ -157,21 +166,33 @@
 									<li><a class="dropdown-item d-flex align-items-center" asp-controller="Role" asp-action="Add"><i class="bi bi-plus-circle"></i> Add Role</a></li>
 								</ul>
 							</li>
-						</ul>
-					}
+						}
+					</ul>
+
 					<!-- Right section -->
 					<ul class="navbar-nav ms-auto mb-2 mb-sm-0 align-items-center">
 						@if (!User.Identity.IsAuthenticated)
 						{
-							<li class="nav-item"> <a class="nav-link" asp-controller="Account" asp-action="Register"> <i class="bi bi-person-plus"></i> Register </a> </li>
+							<li class="nav-item">
+								<a class="nav-link" asp-controller="Account" asp-action="Register"> <i class="bi bi-person-plus"></i> Register </a>
+							</li>
 							<li class="nav-item">
 								<a class="nav-link" asp-controller="Account" asp-action="Login"> <i class="bi bi-box-arrow-in-right"></i> Login </a>
 							</li>
 						}
 						else
 						{
-							<li class="nav-item me-3">
-								<a class="nav-link navbar-profile" asp-controller="User" asp-action="Details" asp-route-id="@User.Claims.First().Value" title="Profile"> <i class="bi bi-person-circle"></i> </a>
+							<li class="nav-item me-3 position-relative">
+								<a class="nav-link navbar-profile" asp-controller="User" asp-action="Details" asp-route-id="@User.Claims.First().Value" title="Profile">
+									<i class="bi bi-person-circle fs-4"></i>
+								</a>
+								@* Show Admin badge *@
+								@if (User.IsInRole("Admin"))
+								{
+									<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+										Admin
+									</span>
+								}
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" asp-controller="Account" asp-action="Logout"> <i class="bi bi-box-arrow-right"></i> Logout </a>
