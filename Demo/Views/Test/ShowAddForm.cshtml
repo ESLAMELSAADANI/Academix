@@ -1,0 +1,31 @@
+﻿@{
+	Layout = null;
+}
+@{
+	object x = new { placeholder = "Enter Value Of x" };
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>ShowAddForm</title>
+	<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+	<form class="alert alert-light" action="/Test/Add?x=80" method="post">
+		@* <label for="textX">x</label> *@
+		 <label for="x">x</label> 
+		 <!-- Using Html Helper HTML Property To Write html code using C# syntax -->
+		@* <input id="textX" type="text" name="x" placeholder="Enter Value Of x" /> *@	
+		@Html.TextBox("x",10,x)
+		<br/>
+		<br/>
+		<label for="textY">y</label>
+		<input id="textY" type="text" name="y" placeholder="Enter Value Of y" />
+		<br/>
+		<br/>
+		<input type="submit" value="ADD" />
+	</form>
+</body>
+</html>

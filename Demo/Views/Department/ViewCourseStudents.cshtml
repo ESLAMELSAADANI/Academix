@@ -1,0 +1,265 @@
+﻿@model DepartmentCourseStudentsVM
+@{
+    ViewData["Title"] = "Course Students";
+}
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold display-6 text-gradient mb-2">
+            <i class="bi bi-journal-code me-2"></i>@Model.Course.CrsName
+        </h1>
+        <p class="lead text-muted">
+            for the <span class="fw-semibold text-primary">@Model.Department.DeptName</span> Department
+        </p>
+    </div>
+
+    <div class="row g-5">
+        <!-- Enrolled Students -->
+        <div class="col-lg-6">
+            <form method="post" asp-action="UpdateDegree">
+                <input type="hidden" asp-for="Department.DeptId" />
+                <input type="hidden" asp-for="Department.DeptName" />
+                <input type="hidden" asp-for="Course.Id" />
+                <input type="hidden" asp-for="Course.CrsName" />
+                <input type="hidden" asp-for="Course.CrsDuration" />
+
+                <div class="card shadow-lg rounded-5 border-0 overflow-hidden animate-card">
+                    <div class="card-header bg-gradient-success text-white text-center fw-bold py-3 fs-5">
+                        <i class="bi bi-people-fill me-2"></i> Enrolled Students
+                    </div>
+                    <div class="card-body p-4 table-responsive">
+                        <table class="table table-striped align-middle text-center mb-0 rounded-3 overflow-hidden">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                    <th>Degree</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (!Model.StudentCourseDegrees.Any())
+                                {
+                                    <tr>
+                                        <td colspan="5" class="text-muted py-4">
+                                            <i class="bi bi-exclamation-circle"></i> No students enrolled yet.
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    @for (int i = 0; i < Model.StudentCourseDegrees.Count; i++)
+                                    {
+                                        var degreeVM = Model.StudentCourseDegrees[i];
+                                        var student = Model.Department.Students.First(s => s.Id == degreeVM.StudentId);
+                                        <tr>
+                                            <td>
+                                                @student.Id
+                                                <input type="hidden" asp-for="StudentCourseDegrees[@i].StudentId" />
+                                                <input type="hidden" asp-for="StudentCourseDegrees[@i].CourseId" />
+                                            </td>
+                                            <td>@student.Name</td>
+                                            <td>@student.Age</td>
+                                            <td>
+                                                <input asp-for="StudentCourseDegrees[@i].Degree"
+                                                       class="form-control text-center rounded-3 border-1 shadow-sm" />
+                                            </td>
+                                            <td>
+                                                <a asp-action="DeleteStudentCourse"
+                                                   class="btn btn-gradient-danger btn-sm px-3"
+                                                   asp-route-stdId="@degreeVM.StudentId"
+                                                   asp-route-crsId="@degreeVM.CourseId"
+                                                   asp-route-deptId="@Model.Department.DeptId">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card-footer text-center py-3 bg-light">
+                        <button type="submit" class="btn btn-gradient-primary px-4">
+                            <i class="bi bi-check2-circle me-1"></i> Save Degrees
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Other Students -->
+        <div class="col-lg-6">
+            <div class="card shadow-lg rounded-5 border-0 overflow-hidden animate-card">
+                <div class="card-header bg-gradient-secondary text-white text-center fw-bold py-3 fs-5">
+                    <i class="bi bi-person-plus-fill me-2"></i> Other Students (Not Enrolled)
+                </div>
+                <div class="card-body p-4">
+                    @if (!Model.OtherStudents.Any())
+                    {
+                        <p class="text-center text-muted fs-6 mt-3">All students are already enrolled 🎉</p>
+                    }
+                    else
+                    {
+                        <form method="post" asp-action="EnrollSelectedStudents">
+                            <input type="hidden" asp-for="Department.DeptId" />
+                            <input type="hidden" asp-for="Department.DeptName" />
+                            <input type="hidden" asp-for="Course.Id" />
+                            <input type="hidden" asp-for="Course.CrsName" />
+                            <input type="hidden" asp-for="Course.CrsDuration" />
+
+                            <div class="table-responsive">
+                                <table class="table table-striped align-middle text-center mb-0 rounded-3 overflow-hidden">
+                                    <thead class="table-secondary">
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Age</th>
+                                            <th>Degree</th>
+                                            <th>Select</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.OtherStudents.Count; i++)
+                                        {
+                                            var student = Model.Department.Students.First(st => st.Id == Model.OtherStudents[i].StudentId);
+                                            <tr>
+                                                <td>@student.Id</td>
+                                                <td>@student.Name</td>
+                                                <td>@student.Age</td>
+                                                <td>
+                                                    <input asp-for="OtherStudents[@i].Degree"
+                                                           class="form-control text-center rounded-3 border-1 shadow-sm" />
+                                                    <input type="hidden" asp-for="OtherStudents[@i].StudentId" />
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" name="SelectedStudentIds" value="@student.Id" class="form-check-input" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="d-flex justify-content-center mt-4">
+                                <button type="submit" class="btn btn-gradient-success px-5">
+                                    <i class="bi bi-person-check"></i> Enroll Selected
+                                </button>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Return Button -->
+    <div class="text-center mt-5">
+        <a asp-action="Index" class="btn btn-gradient-secondary px-5 py-2 shadow-sm">
+            <i class="bi bi-arrow-left-circle me-2"></i> Return to Departments
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f8fbff, #eef2f7);
+    }
+
+    .text-gradient {
+        background: linear-gradient(90deg, #007bff, #6610f2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .bg-gradient-success {
+        background: linear-gradient(90deg, #28a745, #20c997);
+    }
+
+    .bg-gradient-secondary {
+        background: linear-gradient(90deg, #6c757d, #adb5bd);
+    }
+
+    .btn-gradient-primary {
+        background: linear-gradient(90deg, #007bff, #6610f2);
+        color: white;
+        border: none;
+        border-radius: 0.6rem;
+        transition: all 0.3s;
+    }
+
+        .btn-gradient-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(0, 123, 255, 0.3);
+        }
+
+    .btn-gradient-danger {
+        background: linear-gradient(90deg, #dc3545, #ff6b6b);
+        color: white;
+        border: none;
+        border-radius: 0.6rem;
+        transition: all 0.3s;
+    }
+
+        .btn-gradient-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(220, 53, 69, 0.3);
+        }
+
+    .btn-gradient-success {
+        background: linear-gradient(90deg, #28a745, #20c997);
+        color: white;
+        border: none;
+        border-radius: 0.6rem;
+        transition: all 0.3s;
+    }
+
+        .btn-gradient-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(40, 167, 69, 0.3);
+        }
+
+    .btn-gradient-secondary {
+        background: linear-gradient(90deg, #6c757d, #adb5bd);
+        color: white;
+        border: none;
+        border-radius: 0.6rem;
+        transition: all 0.3s;
+    }
+
+        .btn-gradient-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(108, 117, 125, 0.3);
+        }
+
+    .animate-card {
+        animation: fadeInUp 0.8s ease-in-out;
+    }
+
+    @@keyframes fadeInUp {
+        from
+
+    {
+        transform: translateY(25px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f8f9fa;
+        transform: scale(1.01);
+        transition: all 0.2s ease;
+    }
+</style>

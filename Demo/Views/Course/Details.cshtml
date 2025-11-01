@@ -1,0 +1,118 @@
+﻿@model Course
+@{
+    ViewData["Title"] = "Course Details";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold display-5 fade-in-down">
+            <span class="text-primary">@Model.CrsName</span> Details
+        </h1>
+        <p class="text-muted fs-5">Explore the information of this course below.</p>
+    </div>
+
+    <div class="card shadow-lg border-0 rounded-4 mx-auto glass-card" style="max-width: 700px;">
+        <div class="card-body p-5">
+            <div class="row text-center">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="detail-box">
+                        <i class="bi bi-hash display-5 text-primary"></i>
+                        <h6 class="mt-2 text-muted">Course ID</h6>
+                        <h4 class="fw-semibold">@Model.Id</h4>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="detail-box">
+                        <i class="bi bi-journal-bookmark display-5 text-success"></i>
+                        <h6 class="mt-2 text-muted">Name</h6>
+                        <h4 class="fw-semibold">@Model.CrsName</h4>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="detail-box">
+                        <i class="bi bi-hourglass-split display-5 text-warning"></i>
+                        <h6 class="mt-2 text-muted">Duration</h6>
+                        <h4 class="fw-semibold">@Model.CrsDuration H</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <a asp-action="Index" class="btn btn-lg btn-primary px-5 shadow-sm rounded-pill hover-lift">
+            <i class="bi bi-arrow-left-circle me-2"></i> Return to Courses
+        </a>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f8f9fc, #eef2f7);
+    }
+
+    .fade-in-down {
+        animation: fadeInDown 0.8s ease-in-out;
+    }
+
+    @@keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        animation: fadeUp 0.8s ease-in-out;
+    }
+
+    @@keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .detail-box {
+        padding: 20px;
+        border-radius: 15px;
+        background: #ffffff;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+
+        .detail-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+    .hover-lift:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #0d6efd, #4b8bf4);
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0056d2, #0d6efd);
+        }
+</style>

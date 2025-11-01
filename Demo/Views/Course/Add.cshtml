@@ -1,0 +1,127 @@
+﻿@model Course
+@{
+    ViewData["Title"] = "Add Course";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-5 fade-in-down">
+        <h1 class="fw-bold text-primary display-5">Add a New Course</h1>
+        <p class="text-muted fs-5">Provide the details below to register a new course in the system.</p>
+    </div>
+
+    <div class="card shadow-lg border-0 rounded-4 mx-auto glass-card" style="max-width: 650px;">
+        <div class="card-body p-5">
+            <form method="post" class="needs-validation" novalidate>
+                <div class="mb-4">
+                    <label asp-for="CrsName" class="form-label fw-semibold">Course Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light"><i class="bi bi-journal-text text-primary"></i></span>
+                        <input asp-for="CrsName" class="form-control form-control-lg rounded-end" placeholder="Enter course name..." />
+                    </div>
+                    <span class="text-danger small" asp-validation-for="CrsName"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="CrsDuration" class="form-label fw-semibold">Duration (Hours)</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light"><i class="bi bi-hourglass-split text-warning"></i></span>
+                        <input asp-for="CrsDuration" class="form-control form-control-lg rounded-end" placeholder="Enter duration in hours..." />
+                    </div>
+                    <span class="text-danger small" asp-validation-for="CrsDuration"></span>
+                </div>
+
+                <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+                    <button type="submit" class="btn btn-success btn-lg px-5 shadow-sm rounded-pill hover-lift">
+                        <i class="bi bi-plus-circle me-2"></i> Add Course
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-5 rounded-pill hover-lift">
+                        <i class="bi bi-arrow-left-circle me-2"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f8f9fc, #eef2f7);
+    }
+
+    /* Card Animation */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        animation: fadeUp 0.8s ease-in-out;
+    }
+
+    @@keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .fade-in-down {
+        animation: fadeInDown 0.8s ease-in-out;
+    }
+
+    @@keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Buttons */
+    .btn-success {
+        background: linear-gradient(135deg, #198754, #28a745);
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #157347, #198754);
+            transform: scale(1.05);
+        }
+
+    .btn-outline-secondary:hover {
+        background-color: #e9ecef;
+        transform: scale(1.05);
+    }
+
+    /* Hover lift effect */
+    .hover-lift {
+        transition: transform 0.3s ease;
+    }
+
+        .hover-lift:hover {
+            transform: translateY(-3px);
+        }
+
+    .input-group-text {
+        border-right: none;
+        border-radius: 10px 0 0 10px;
+    }
+
+    .form-control {
+        border-left: none;
+        border-radius: 0 10px 10px 0;
+        box-shadow: none;
+    }
+</style>

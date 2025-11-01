@@ -1,0 +1,202 @@
+﻿@model UserRoleVM
+@{
+	ViewData["Title"] = "Manage Roles";
+}
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+
+<!-- Custom Styling -->
+<style>
+	body {
+		background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+		font-family: 'Poppins', sans-serif;
+	}
+
+	h1 span {
+		text-shadow: 0 0 10px rgba(13, 110, 253, 0.3);
+	}
+
+	.card {
+		border-radius: 20px;
+		transition: all 0.3s ease-in-out;
+	}
+
+	.card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+	}
+
+	.card-header {
+		font-size: 1.3rem;
+		letter-spacing: 0.5px;
+	}
+
+	table {
+		border-radius: 10px;
+		overflow: hidden;
+	}
+
+	th {
+		text-transform: uppercase;
+		font-size: 0.9rem;
+	}
+
+	td {
+		vertical-align: middle;
+	}
+
+	.btn {
+		border-radius: 25px;
+		font-weight: 500;
+		transition: all 0.3s ease;
+	}
+
+	.btn:hover {
+		transform: scale(1.05);
+	}
+
+	.btn i {
+		margin-right: 5px;
+	}
+
+	.table-hover tbody tr:hover {
+		background-color: rgba(0, 0, 0, 0.05);
+		transition: background 0.3s ease;
+	}
+
+	.section-title {
+		font-size: 1.4rem;
+		font-weight: 600;
+		text-align: center;
+		margin-bottom: 15px;
+	}
+</style>
+
+<div class="container my-5">
+	<h1 class="text-center text-dark mb-5">
+		Manage Roles for 
+		<span class="text-primary fw-bold">@Model.User.UserName</span>
+	</h1>
+
+	<div class="row g-4">
+		<!-- Roles To Delete -->
+		<div class="col-md-6">
+			<div class="card shadow border-0">
+				<div class="card-header bg-danger text-white text-center fw-bold rounded-top">
+					<i class="bi bi-trash3-fill me-2"></i> Roles to Delete
+				</div>
+				<div class="card-body">
+					<form asp-action="DeleteSelectedRoles" method="post">
+						<input type="hidden" asp-for="User.Id" value="@Model.User.Id" />
+						<input type="hidden" asp-for="User.UserName" value="@Model.User.UserName" />
+
+						<table class="table table-striped table-hover align-middle text-center">
+							<thead class="table-danger">
+								<tr>
+									<th>ID</th>
+									<th>Role Name</th>
+									<th>Select</th>
+								</tr>
+							</thead>
+							<tbody>
+								@if (Model.RolesToDelete == null || !Model.RolesToDelete.Any())
+								{
+									<tr>
+										<td colspan="3" class="text-muted py-4">
+											<i class="bi bi-exclamation-circle me-2"></i>No Roles To Delete
+										</td>
+									</tr>
+								}
+								else
+								{
+									foreach (var role in Model.RolesToDelete)
+									{
+										<tr>
+											<td>@role.Id</td>
+											<td>@role.RoleName</td>
+											<td>
+												<input class="form-check-input" type="checkbox" name="RolesToDeleteIds" value="@role.Id" />
+											</td>
+										</tr>
+									}
+								}
+							</tbody>
+						</table>
+
+						<div class="text-center mt-3">
+							<button class="btn btn-danger px-4 shadow-sm" type="submit">
+								<i class="bi bi-trash"></i> Delete Selected
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- Roles To Add -->
+		<div class="col-md-6">
+			<div class="card shadow border-0">
+				<div class="card-header bg-success text-white text-center fw-bold rounded-top">
+					<i class="bi bi-person-plus-fill me-2"></i> Roles to Add
+				</div>
+				<div class="card-body">
+					<form asp-action="AddSelectedRoles" method="post">
+						<input type="hidden" asp-for="User.Id" value="@Model.User.Id" />
+						<input type="hidden" asp-for="User.UserName" value="@Model.User.UserName" />
+
+						<table class="table table-striped table-hover align-middle text-center">
+							<thead class="table-success">
+								<tr>
+									<th>ID</th>
+									<th>Role Name</th>
+									<th>Select</th>
+								</tr>
+							</thead>
+							<tbody>
+								@if (Model.RolesToAdd == null || !Model.RolesToAdd.Any())
+								{
+									<tr>
+										<td colspan="3" class="text-muted py-4">
+											<i class="bi bi-info-circle me-2"></i>No Roles To Add
+										</td>
+									</tr>
+								}
+								else
+								{
+									foreach (var role in Model.RolesToAdd)
+									{
+										<tr>
+											<td>@role.Id</td>
+											<td>@role.RoleName</td>
+											<td>
+												<input class="form-check-input" type="checkbox" name="RolesToAddIds" value="@role.Id" />
+											</td>
+										</tr>
+									}
+								}
+							</tbody>
+						</table>
+
+						<div class="text-center mt-3">
+							<button class="btn btn-success px-4 shadow-sm" type="submit">
+								<i class="bi bi-plus-circle"></i> Add Selected
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Back to Users List -->
+	<div class="text-center mt-5">
+		<a asp-action="Index" asp-controller="User" class="btn btn-outline-secondary px-4">
+			<i class="bi bi-arrow-left"></i> Back to User List
+		</a>
+	</div>
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

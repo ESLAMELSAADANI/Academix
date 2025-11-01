@@ -1,0 +1,137 @@
+﻿@model Course
+@{
+    ViewData["Title"] = "Edit Course";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold text-primary display-6 fade-in">
+            ✏️ Edit Course: <span class="text-dark">@Model.CrsName</span>
+        </h1>
+        <p class="text-muted fs-5">Update course details or delete it if no longer needed.</p>
+    </div>
+
+    <div class="card edit-card shadow-lg border-0 rounded-4 mx-auto p-4">
+        <div class="card-body px-4 py-5">
+            <form method="post" class="needs-validation" novalidate>
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-4">
+                    <label asp-for="CrsName" class="form-label fw-semibold text-secondary">Course Name</label>
+                    <input asp-for="CrsName" class="form-control form-control-lg rounded-3 shadow-sm" placeholder="Enter course name..." />
+                    <span class="text-danger small" asp-validation-for="CrsName"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="CrsDuration" class="form-label fw-semibold text-secondary">Duration (Hours)</label>
+                    <input asp-for="CrsDuration" class="form-control form-control-lg rounded-3 shadow-sm" placeholder="Enter duration in hours..." />
+                    <span class="text-danger small" asp-validation-for="CrsDuration"></span>
+                </div>
+
+                <div class="d-flex justify-content-center flex-wrap gap-3 mt-4">
+                    <button asp-action="Edit" type="submit" class="btn btn-primary btn-lg px-5 shadow-sm rounded-pill d-flex align-items-center gap-2">
+                        <i class="bi bi-pencil-square"></i> Save Changes
+                    </button>
+
+                    <button asp-action="Delete" type="submit" class="btn btn-danger btn-lg px-5 shadow-sm rounded-pill d-flex align-items-center gap-2">
+                        <i class="bi bi-trash"></i> Delete Course
+                    </button>
+
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-5 rounded-pill d-flex align-items-center gap-2">
+                        <i class="bi bi-arrow-left-circle"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<!-- Enhanced Styling -->
+<style>
+    body {
+        background: linear-gradient(135deg, #eef2f3, #e2ebf0);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .edit-card {
+        max-width: 650px;
+        background: #ffffff;
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(13, 110, 253, 0.1);
+        box-shadow: 0 12px 40px rgba(13, 110, 253, 0.1);
+        transition: all 0.4s ease-in-out;
+        animation: slideUp 0.8s ease;
+    }
+
+        .edit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 50px rgba(13, 110, 253, 0.15);
+        }
+
+    .fade-in {
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes slideUp {
+        from {
+            transform: translateY(30px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #0d6efd, #007bff);
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0a58ca, #0b5ed7);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.3);
+        }
+
+    .btn-danger {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #b02a37, #bb2d3b);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 8px 20px rgba(220, 53, 69, 0.3);
+        }
+
+    .btn-outline-secondary:hover {
+        background-color: #f8f9fa;
+        transform: translateY(-2px);
+        color: #212529;
+    }
+
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+</style>

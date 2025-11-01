@@ -1,0 +1,101 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "Create Department";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h1 class="fw-bold text-primary display-6">Add New Department</h1>
+        <p class="text-muted">Fill in the details below to add a new department to the system.</p>
+    </div>
+
+    <div class="card shadow-lg border-0 rounded-4 mx-auto" style="max-width: 600px;">
+        <div class="card-body p-5">
+            <form asp-controller="department" asp-action="create" method="post" class="needs-validation" novalidate>
+                <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                <!-- DeptId -->
+                <div class="mb-4">
+                    <label asp-for="DeptId" class="form-label fw-semibold"><i class="bi bi-hash me-2"></i>Department ID</label>
+                    <input asp-for="DeptId" class="form-control form-control-lg rounded-3" placeholder="Enter Department ID..." />
+                    <span class="text-danger small" asp-validation-for="DeptId"></span>
+                </div>
+
+                <!-- DeptName -->
+                <div class="mb-4">
+                    <label asp-for="DeptName" class="form-label fw-semibold"><i class="bi bi-card-text me-2"></i>Department Name</label>
+                    <input asp-for="DeptName" class="form-control form-control-lg rounded-3" placeholder="Enter Department Name..." />
+                    <span class="text-danger small" asp-validation-for="DeptName"></span>
+                </div>
+
+                <!-- Capacity -->
+                <div class="mb-4">
+                    <label asp-for="Capacity" class="form-label fw-semibold"><i class="bi bi-people-fill me-2"></i>Capacity</label>
+                    <input asp-for="Capacity" class="form-control form-control-lg rounded-3" placeholder="Enter Capacity..." />
+                    <span class="text-danger small" asp-validation-for="Capacity"></span>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <button type="submit" class="btn btn-success btn-lg px-5 shadow-sm rounded-pill">
+                        <i class="bi bi-plus-circle me-2"></i> Add Department
+                    </button>
+                    <a asp-controller="department" asp-action="index" class="btn btn-outline-secondary btn-lg px-5 rounded-pill">
+                        <i class="bi bi-arrow-left-circle me-2"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    body {
+        background-color: #f8f9fc;
+    }
+
+    .card {
+        animation: slideUp 0.7s ease-in-out;
+        border-radius: 1.5rem;
+    }
+
+    @@keyframes slideUp {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, #198754, #28a745);
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #157347, #198754);
+            transform: scale(1.05);
+        }
+
+    .btn-outline-secondary:hover {
+        background-color: #e9ecef;
+        transform: scale(1.05);
+    }
+
+    .form-control {
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+    }
+</style>

@@ -1,0 +1,324 @@
+﻿<!-- Strongly Typed View -> Because We know the type of Model which is List<Student> </Student>->
+@* @model List<Student> *@
+@model HomoginuousTypesVM
+@{
+	Layout = null;
+}
+@{
+	//======     Deal With Data Inside View Direct (Data Declared Inside View) ==============
+	// int x = 150;
+	// string name = "Eslam";
+	// List<string> names = new List<string>() { "ali", "eslam", "sara", "fatma" };
+	// Student student = new Student() { Id = 10, Name = "Eslam", Age = 23 };
+	// List<Student> students = new List<Student>()
+	// {
+	// 	new Student(){ Id = 10, Name = "Ahmed", Age = 23 },
+	// 	new Student(){ Id = 20, Name = "Hanaa", Age = 25 },
+	// 	new Student(){ Id = 30, Name = "Sama", Age = 27 },
+	// 	new Student(){ Id = 40, Name = "Ashraf", Age = 14 },
+	// 	new Student(){ Id = 50, Name = "Randa", Age = 15 },
+	// 	new Student(){ Id = 60, Name = "Heba", Age = 33 },
+	// };
+
+	// int x = 150;
+	// string name = "Eslam";
+	List<string> names = new List<string>() { "ali", "eslam", "sara", "fatma" };
+	// Student student = new Student() { Id = 10, Name = "Eslam", Age = 23 };
+	// List<Student> students = new List<Student>()
+	// {
+	// 	new Student(){ Id = 10, Name = "Ahmed", Age = 23 },
+	// 	new Student(){ Id = 20, Name = "Hanaa", Age = 25 },
+	// 	new Student(){ Id = 30, Name = "Sama", Age = 27 },
+	// 	new Student(){ Id = 40, Name = "Ashraf", Age = 14 },
+	// 	new Student(){ Id = 50, Name = "Randa", Age = 15 },
+	// 	new Student(){ Id = 60, Name = "Heba", Age = 33 },
+	// };
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Details</title>
+	<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+	<!--         Deal With Data Inside View Direct (Data Declared Inside View)             -->
+	@* <h1>x = @x</h1><!-- x = 10 -->
+	<h2>x = @x+10</h2><!-- x = 10+10 -->
+	<h3>x = @(x + 10)</h3><!-- x = 20 -->
+
+	<h3>name = @name</h3><!-- name = Eslam -->
+	<h3>Length = @name.Length</h3><!-- Length = 5 -->
+	<h3>Length@name.Length</h3><!-- Length@name.Length -->
+	<h3>Length @name.Length</h3><!-- Length 5 -->
+	<h3>Length@(name.Length)</h3><!-- Length5 -->
+
+	<h4>Names:</h4>
+	<ul>
+		@for (int i = 0; i < names.Count; i++)
+		{
+			<li>@names[i]</li>
+		}
+	</ul>
+
+
+	@if (x > 100)
+	{
+		<div style="background-color:red">
+			@x is Greater than 100
+		</div>
+	}
+	<br />
+	<br />
+	<h5 class="alert alert-danger">Student (@student.Name) Details => @student</h5>
+
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th></th>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Age</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (students == null || students.Count == 0)
+			{
+				<tr>
+					<td colspan="4" align="center">No Students Found!</td>
+				</tr>
+			}
+			else
+			{
+				@for (int i = 0; i < students.Count; i++)
+				{
+					<tr>
+						<td>@(i + 1)</td>
+						<td>@students[i].Id</td>
+						<td>@students[i].Name</td>
+						<td>@students[i].Age</td>
+					</tr>
+				}
+			} *@
+
+
+<!--         Deal With Data came from controller (Declared Inside Controller)                -->
+<!-- 01  ->
+<!--   Using ViewData["Key"] Which Return The Value As Of Type object So Must Cast when deal with operations and properties -->
+	@* <h1>x = @ViewData["x"]</h1><!-- x = 10 -->
+	<h2>x = @ViewData["x"]+10</h2><!-- x = 10+10 -->
+	<h3>x = @((int)ViewData["x"] + 10)</h3><!-- x = 20 -->
+
+	<h3>name = @ViewData["fname"]</h3><!-- name = Eslam -->
+	<h3>Length = @((string)ViewData["fname"]).Length</h3><!-- Length = 5 -->
+	<h3>Length@name.Length</h3><!-- Length@name.Length -->
+	<h3>Length @((string)ViewData["fname"]).Length</h3><!-- Length 5 -->
+	<h3>Length@(((string)ViewData["fname"]).Length)</h3><!-- Length5 -->
+
+	<h4>Names:</h4>
+	<ul>
+		@for (int i = 0; i < names.Count; i++)
+		{
+			<li>@names[i]</li>
+		}
+	</ul>
+
+
+	@if ((int)ViewData["x"] > 100)
+	{
+		<div style="background-color:red">
+			@ViewData["x"] is Greater than 100
+		</div>
+	}
+	<br />
+	<br />
+	<h5 class="alert alert-danger">Student (@((Student)ViewData["student"]).Name) Details => @ViewData["student"]</h5>
+
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th></th>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Age</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (ViewData["students"] == null || ((List<Student>)ViewData["students"]).Count == 0)
+			{
+				<tr>
+					<td colspan="4" align="center">No Students Found!</td>
+				</tr>
+			}
+			else
+			{
+				@for (int i = 0; i < ((List<Student>)ViewData["students"]).Count; i++)
+				{
+					<tr>
+						<td>@(i + 1)</td>
+						<td>@(((List<Student>)ViewData["students"])[i].Id)</td>
+						<td>@(((List<Student>)ViewData["students"])[i].Name)</td>
+						<td>@(((List<Student>)ViewData["Students"])[i].Age)</td>
+					</tr>
+				}
+			} *@
+
+
+<!-- 02  ->
+<!--   Using ViewBag.Key Which Return The Value As Of Type dynamic which known in run time not compile time, so don't need to make cast because no errors in compile time -->
+@* <h1>x = @ViewBag.x</h1><!-- x = 10 -->
+<h2>x = @ViewBag.x+10</h2><!-- x = 10+10 -->
+<h3>x = @(ViewBag.x + 10)</h3><!-- x = 20 -->
+
+<h3>name = @ViewBag.fname</h3><!-- name = Eslam -->
+<h3>Length = @ViewBag.fname.Length</h3><!-- Length = 5 -->
+<h3>Length@name.Length</h3><!-- Length@name.Length -->
+<h3>Length @ViewBag.fname.Length</h3><!-- Length 5 -->
+<h3>Length@(ViewBag.fname.Length)</h3><!-- Length5 -->
+
+<h4>Names:</h4>
+<ul>
+	@for (int i = 0; i < names.Count; i++)
+	{
+		<li>@names[i]</li>
+	}
+</ul>
+
+
+	@if (ViewBag.x > 100)
+	{
+	<div style="background-color:red">
+		@ViewBag.x is Greater than 100
+	</div>
+	}
+<br />
+<br />
+<h5 class="alert alert-danger">Student (@ViewBag.student.Name) Details => @ViewBag.student</h5> *@
+
+	@* <table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th></th>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Age</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (ViewBag.students == null || ViewBag.students.Count == 0)
+			{
+				<tr>
+					<td colspan="4" align="center">No Students Found!</td>
+				</tr>
+			}
+			else
+			{
+				@for (int i = 0; i < ViewBag.students.Count; i++)
+				{
+					<tr>
+						<td>@(i + 1)</td>
+						<td>@(ViewBag.students[i].Id)</td>
+						<td>@(ViewBag.students[i].Name)</td>
+						<td>@(ViewBag.students[i].Age)</td>
+					</tr>
+				}
+			} *@
+
+<!--  Using Model But Model Can Represent Only One Type -->
+	@* <table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th></th>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Age</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (Model == null || Model.Count == 0)
+			{
+				<tr>
+					<td colspan="4" align="center">No Students Found!</td>
+				</tr>
+			}
+			else
+			{
+				@for (int i = 0; i < Model.Count; i++)
+				{
+					<tr>
+						<td>@(i + 1)</td>
+						<td>@(Model[i].Id)</td>
+						<td>@(Model[i].Name)</td>
+						<td>@(Model[i].Age)</td>
+					</tr>
+				}
+			} *@
+
+<!-- Using ViewModel That Represent Many Types -->
+<h1>x = @Model.x</h1><!-- x = 10 -->
+<h2>x = @Model.x+10</h2><!-- x = 10+10 -->
+<h3>x = @(Model.x + 10)</h3><!-- x = 20 -->
+
+<h3>name = @Model.name</h3><!-- name = Eslam -->
+<h3>Length = @Model.name.Length</h3><!-- Length = 5 -->
+<h3>Length@name.Length</h3><!-- Length@name.Length -->
+<h3>Length @Model.name.Length</h3><!-- Length 5 -->
+<h3>Length@(Model.name.Length)</h3><!-- Length5 -->
+
+<h4>Names:</h4>
+<ul>
+	@for (int i = 0; i < Model.names.Count; i++)
+	{
+		<li>@Model.names[i]</li>
+	}
+</ul>
+
+
+	@if (Model.x > 100)
+	{
+	<div style="background-color:red">
+		@Model.x is Greater than 100
+	</div>
+	}
+<br />
+<br />
+<h5 class="alert alert-danger">Student (@Model.student.Name) Details => @Model.student</h5>
+
+<table class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Id</th>
+			<th>Name</th>
+			<th>Age</th>
+		</tr>
+	</thead>
+	<tbody>
+		@if (Model.students == null || Model.students.Count == 0)
+		{
+			<tr>
+				<td colspan="4" align="center">No Students Found!</td>
+			</tr>
+		}
+		else
+		{
+			@for (int i = 0; i < Model.students.Count; i++)
+			{
+				<tr>
+					<td>@(i + 1)</td>
+					<td>@(Model.students[i].Id)</td>
+					<td>@(Model.students[i].Name)</td>
+					<td>@(Model.students[i].Age)</td>
+				</tr>
+			}
+		}
+
+
+	</tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+﻿@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>@ViewBag.Title</title>
+	<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+	@RenderBody();
+	<h3>End Of _TestLayout View Body</h3>
+	@RenderSection("sec1",false);
+</body>
+</html>

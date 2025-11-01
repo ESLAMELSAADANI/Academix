@@ -1,0 +1,153 @@
+﻿@model HomeDashboardVM
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- Hero Section -->
+<div class="bg-gradient-primary text-white py-5">
+    <div class="container text-center">
+        <h1 class="display-3 fw-bold mb-3">
+            Academix
+        </h1>
+        <p class="lead mb-4">
+            Centralized management for <strong>Departments, Students, Courses, and Users</strong>.
+            Streamline operations with <span class="fw-bold">modern tools</span>.
+        </p>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a asp-controller="Department" asp-action="Index" class="btn btn-light btn-lg me-3 shadow-sm">
+                <i class="bi bi-building"></i> Departments
+            </a>
+            <a asp-controller="Student" asp-action="Index" class="btn btn-outline-light btn-lg shadow-sm">
+                <i class="bi bi-person"></i> Students
+            </a>
+        }
+        else
+        {
+            <a asp-controller="Account" asp-action="Login" class="btn btn-warning btn-lg me-3 shadow-sm">
+                <i class="bi bi-box-arrow-in-right"></i> Log in to Explore
+            </a>
+        }
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="container py-5">
+    <h2 class="text-center fw-bold mb-5">System Overview</h2>
+    <div class="row g-4 text-center">
+        <div class="col-md-3">
+            <div class="card h-100 shadow-sm border-0 rounded-4 py-4 stats-card">
+                <i class="bi bi-building fs-1 text-primary mb-2"></i>
+                <h3 class="fw-bold">@Model.DepartmentCount</h3>
+                <p class="text-muted mb-0">Departments</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 shadow-sm border-0 rounded-4 py-4 stats-card">
+                <i class="bi bi-person fs-1 text-success mb-2"></i>
+                <h3 class="fw-bold">@Model.StudentCount</h3>
+                <p class="text-muted mb-0">Students</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 shadow-sm border-0 rounded-4 py-4 stats-card">
+                <i class="bi bi-journal-text fs-1 text-warning mb-2"></i>
+                <h3 class="fw-bold">@Model.CourseCount</h3>
+                <p class="text-muted mb-0">Courses</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 shadow-sm border-0 rounded-4 py-4 stats-card">
+                <i class="bi bi-people fs-1 text-danger mb-2"></i>
+                <h3 class="fw-bold">@Model.UserCount</h3>
+                <p class="text-muted mb-0">Users</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container py-5">
+    <h2 class="text-center fw-bold mb-5">What <span class="text-primary fw-bold">Academix</span> Can Do</h2>
+    <div class="row g-4">
+        <div class="col-md-3 text-center">
+            <div class="card h-100 shadow-sm border-0 rounded-4 feature-card">
+                <div class="card-body">
+                    <i class="bi bi-building fs-1 text-primary mb-3"></i>
+                    <h5 class="card-title fw-bold">Manage Departments</h5>
+                    <p class="card-text text-muted">Create, edit, and track all departments in your institution efficiently.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="card h-100 shadow-sm border-0 rounded-4 feature-card">
+                <div class="card-body">
+                    <i class="bi bi-person fs-1 text-success mb-3"></i>
+                    <h5 class="card-title fw-bold">Student Management</h5>
+                    <p class="card-text text-muted">Enroll, edit, and monitor student records with ease.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="card h-100 shadow-sm border-0 rounded-4 feature-card">
+                <div class="card-body">
+                    <i class="bi bi-journal-text fs-1 text-warning mb-3"></i>
+                    <h5 class="card-title fw-bold">Course Management</h5>
+                    <p class="card-text text-muted">Add, delete, or assign courses and track all academic programs.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="card h-100 shadow-sm border-0 rounded-4 feature-card">
+                <div class="card-body">
+                    <i class="bi bi-people fs-1 text-danger mb-3"></i>
+                    <h5 class="card-title fw-bold">User & Roles</h5>
+                    <p class="card-text text-muted">Manage users, assign roles, and control access securely.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="bg-gradient-secondary text-white py-5">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-4">Ready to streamline your campus operations?</h2>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a asp-controller="Department" asp-action="Index" class="btn btn-light btn-lg me-3 shadow-sm">
+                <i class="bi bi-building"></i> Explore Departments
+            </a>
+            <a asp-controller="Student" asp-action="Index" class="btn btn-outline-light btn-lg shadow-sm">
+                <i class="bi bi-person"></i> Explore Students
+            </a>
+        }
+        else
+        {
+            <a asp-controller="Account" asp-action="Login" class="btn btn-warning btn-lg shadow-sm">
+                <i class="bi bi-box-arrow-in-right"></i> Log in to Explore
+            </a>
+        }
+    </div>
+</div>
+
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #0d6efd, #6610f2);
+    }
+
+    .bg-gradient-secondary {
+        background: linear-gradient(135deg, #6610f2, #6f42c1);
+    }
+
+    .stats-card, .feature-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .stats-card:hover, .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+</style>

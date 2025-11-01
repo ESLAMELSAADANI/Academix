@@ -1,0 +1,106 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "Edit Department";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card border-0 shadow-lg rounded-5 p-5 animate-card">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold text-gradient mb-2">
+                        <i class="bi bi-building-gear me-2"></i>
+                        Edit Department
+                    </h2>
+                    <p class="text-muted">Update details for <strong>@Model.DeptName</strong> or delete it.</p>
+                </div>
+
+                <form method="post">
+                    <input type="hidden" asp-for="DeptId" />
+
+                    <div class="form-floating mb-4">
+                        <input asp-for="DeptName" class="form-control rounded-4 shadow-sm" placeholder="Department Name" />
+                        <label asp-for="DeptName">Department Name</label>
+                        <span asp-validation-for="DeptName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input asp-for="Capacity" class="form-control rounded-4 shadow-sm" placeholder="Capacity" />
+                        <label asp-for="Capacity">Capacity</label>
+                        <span asp-validation-for="Capacity" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <button asp-action="Edit" class="btn btn-gradient-primary btn-lg px-4 shadow-sm">
+                            <i class="bi bi-check2-circle me-2"></i> Save Changes
+                        </button>
+                        <button asp-action="Delete" class="btn btn-gradient-danger btn-lg px-4 shadow-sm">
+                            <i class="bi bi-trash3-fill me-2"></i> Delete
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f8faff, #eef2f7);
+    }
+
+    .text-gradient {
+        background: linear-gradient(90deg, #007bff, #6610f2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .btn-gradient-primary {
+        background: linear-gradient(90deg, #007bff, #6610f2);
+        color: #fff;
+        border: none;
+        border-radius: 0.75rem;
+        transition: all 0.3s ease;
+    }
+
+        .btn-gradient-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(0, 123, 255, 0.3);
+        }
+
+    .btn-gradient-danger {
+        background: linear-gradient(90deg, #dc3545, #ff6b6b);
+        color: #fff;
+        border: none;
+        border-radius: 0.75rem;
+        transition: all 0.3s ease;
+    }
+
+        .btn-gradient-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(220, 53, 69, 0.3);
+        }
+
+    .animate-card {
+        animation: fadeInUp 0.7s ease-in-out;
+    }
+
+    @@keyframes fadeInUp {
+        from
+
+    {
+        transform: translateY(25px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

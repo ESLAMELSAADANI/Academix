@@ -1,0 +1,7 @@
+﻿@model Exception;
+@{
+    ViewData["Title"] = "Exception";
+}
+
+<h1 class="alert alert-danger">@Model.InnerException?.Message</h1>
+

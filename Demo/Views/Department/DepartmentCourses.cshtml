@@ -1,0 +1,133 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "DepartmentCourses";
+}
+
+<div class="container my-5">
+    <!-- Page Header -->
+    <h1 class="text-center mb-5 fw-bold display-6">
+        Courses in Department <span class="text-gradient">@Model.DeptName</span>
+    </h1>
+
+    @if (Model == null || !Model.Courses.Any())
+    {
+        <!-- Empty State -->
+        <div class="text-center py-5 bg-light rounded-4 shadow-sm">
+            <i class="bi bi-journal-x text-danger fs-1 mb-3"></i>
+            <p class="fs-5 text-muted mb-3">No courses found for this department!</p>
+            <a asp-controller="Course" asp-action="Add" class="btn btn-success btn-lg hover-btn">
+                <i class="bi bi-plus-circle"></i> Add Course
+            </a>
+        </div>
+    }
+    else
+    {
+        <!-- Course Cards -->
+        <div class="row g-4">
+            @foreach (var course in Model.Courses)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-lg rounded-4 hover-card h-100">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <!-- Course Info -->
+                            <div>
+                                <h5 class="card-title fw-bold text-primary mb-3">
+                                    <i class="bi bi-journal-bookmark-fill"></i> @course.CrsName
+                                </h5>
+                                <p class="card-text mb-1">
+                                    <i class="bi bi-hash"></i> <strong>Id:</strong> @course.Id
+                                </p>
+                                <p class="card-text mb-3">
+                                    <i class="bi bi-clock-fill"></i> <strong>Duration:</strong> @course.CrsDuration H
+                                </p>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="mt-auto d-flex justify-content-between flex-wrap gap-2">
+                                <a asp-controller="department"
+                                   asp-action="ViewCourseStudents"
+                                   asp-route-crsId="@course.Id"
+                                   asp-route-deptID="@Model.DeptId"
+                                   class="btn btn-outline-primary btn-sm fw-semibold">
+                                    <i class="bi bi-people-fill"></i> Students
+                                </a>
+
+                                <form asp-action="deleteDepartmentCourse" method="post" class="d-inline">
+                                    <input type="hidden" asp-for="@Model.DeptId" />
+                                    <input type="hidden" asp-for="@Model.DeptName" />
+                                    <input type="hidden" asp-for="@Model.Capacity" />
+                                    <input type="hidden" name="courseID" value="@course.Id" />
+                                    <button type="submit" class="btn btn-outline-danger btn-sm fw-semibold">
+                                        <i class="bi bi-trash-fill"></i> Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    <!-- Return Button -->
+    <div class="text-center mt-5">
+        <a asp-action="index" class="btn btn-primary btn-lg hover-btn rounded-pill px-4">
+            <i class="bi bi-arrow-left-circle"></i> Return
+        </a>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    }
+
+    .text-gradient {
+        background: linear-gradient(to right, #007bff, #6610f2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: linear-gradient(145deg, #ffffff, #f1f3f5);
+    }
+
+    .hover-card:hover {
+        transform: translateY(-6px) scale(1.03);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .hover-btn {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+        .hover-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .card-title i, .card-text i, .btn i {
+        margin-right: 6px;
+    }
+
+    @@media (max-width: 576px) {
+        .card-body {
+            text-align: center;
+        }
+
+        .d-flex.justify-content-between.flex-wrap {
+            flex-direction: column;
+        }
+    }
+</style>

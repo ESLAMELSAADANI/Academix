@@ -1,0 +1,10 @@
+﻿@model Student
+@{
+    ViewData["Title"] = "InvalidDeptNoAdd";
+}
+
+
+<h1 class="alert alert-danger">There is no department with id (@Model.DeptNo)</h1>
+<a class="btn btn-success" asp-action="add">Return</a>
+
+
