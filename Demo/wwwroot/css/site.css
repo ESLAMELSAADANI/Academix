@@ -32,3 +32,41 @@ footer.footer {
     text-align: center;
     font-size: 1.1rem;
 }
+
+:root {
+    --bg-color: #ffffff;
+    --text-color: #212529;
+    --nav-bg: #f8f9fa;
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #f1f1f1;
+    --nav-bg: #1e1e1e;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+nav.navbar {
+    background-color: var(--nav-bg) !important;
+    transition: background-color 0.3s;
+}
+
+.nav-link {
+    color: var(--text-color) !important;
+    transition: color 0.3s;
+}
+
+.navbar-brand img {
+    transition: filter 0.3s;
+}
+
+/* Light/Dark logo swap (optional if you have 2 logos) */
+[data-theme="dark"] .navbar-brand img {
+    filter: brightness(0.8);
+}
+
