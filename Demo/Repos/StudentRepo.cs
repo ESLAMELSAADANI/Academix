@@ -22,43 +22,22 @@ namespace Demo.Repos
             userRepoExtra = _userRepoExtra;
         }
 
-        //ITIDbContext dbContext = new ITIDbContext();
-
-        ////====== Dependency Injection =======
-        //ITIDbContext dbContext;
-        //public StudentRepo(ITIDbContext _dbContext)////Constructor Injection [DIC Will Inject The Object Here]
-        //{
-        //    dbContext = _dbContext;
-        //}
-
-
         public async Task<Student> DetailsAsync(int id)
         {
             return await dbContext.Students.Include(s => s.Department).SingleOrDefaultAsync(s => s.Id == id);
         }
-
         public async Task<List<Student>> GetAllWithDepartmentsAsync()
         {
             return await dbContext.Students.Include(s => s.Department).ToListAsync();
         }
-
         public async Task<Student> GetStudentByEmailAsync(string email)
         {
             return await dbContext.Students.AsNoTracking().SingleOrDefaultAsync(s => s.Email == email);
         }
-
         public async Task<Student> GetStudentByUserIdAsync(int userId)
         {
             return await dbContext.Students.AsNoTracking().SingleOrDefaultAsync(s => s.UserId == userId);
         }
-
-        //Not need to use it, bcz dependency injection automatically dispose object created after lifetime of it end
-        //public void Dispose()
-        //{
-        //    dbContext.Dispose();
-        //}
-
-
         public async Task<bool> IsEmailExistAsync(string email, int id)
         {
             // When adding a new Student (Id == 0)

@@ -14,17 +14,19 @@ namespace Demo.Controllers
     {
         public readonly EntityRepo<User> userRepo;
         public readonly EntityRepo<Student> studentRepo;
+        public readonly EntityRepo<Role> roleRepo;
         public readonly EntityRepo<UserRole> userRoleRepo;
 
         public readonly IUserRoleRepoExtra userRoleRepoExtra;
         public readonly IUserRepoExtra userExtraRepo;
+        public readonly IDepartmentRepoExtra departmentExtraRepo;
         public readonly IStudentRepoExtra studentRepoExtra;
-        
+
 
         public readonly IRoleRepoExtra roleRepoExtra;
 
 
-        public userController(EntityRepo<User> _userRepo, IUserRepoExtra _userExtraRepo, IRoleRepoExtra _roleRepoExtra, IUserRoleRepoExtra _userRoleRepoExtra, EntityRepo<UserRole> _userRoleRepo,EntityRepo<Student> _studentRepo,IStudentRepoExtra _studentRepoExtra)
+        public userController(EntityRepo<User> _userRepo, IUserRepoExtra _userExtraRepo, IRoleRepoExtra _roleRepoExtra, IUserRoleRepoExtra _userRoleRepoExtra, EntityRepo<UserRole> _userRoleRepo, EntityRepo<Student> _studentRepo, IStudentRepoExtra _studentRepoExtra, EntityRepo<Role> _roleRepo, IDepartmentRepoExtra _departmentExtraRepo)
         {
             userRepo = _userRepo;
             userExtraRepo = _userExtraRepo;
@@ -33,6 +35,8 @@ namespace Demo.Controllers
             userRoleRepo = _userRoleRepo;
             studentRepo = _studentRepo;
             studentRepoExtra = _studentRepoExtra;
+            roleRepo = _roleRepo;
+            departmentExtraRepo = _departmentExtraRepo;
         }
 
         public async Task<IActionResult> Index()
@@ -215,6 +219,22 @@ namespace Demo.Controllers
             {
                 foreach (var roleId in model.RolesToDeleteIds)
                 {
+                    var role = await roleRepo.GetByIdAsync(roleId);
+                    var firstDept = await departmentExtraRepo.GetFirstDeptAsync();
+                    if (role.RoleName == "Student")
+                    {
+                        Student std = new Student()
+                        {
+                            Name = model.User.UserName,
+                            Email = model.User.Email,
+                            Age = model.User.Age,
+                            DeptNo = firstDept != null ? firstDept.DeptId : null,
+                            Password = model.User.HashPassword,
+                        };
+                        var student = await studentRepoExtra.GetStudentByEmailAsync(std.Email);
+                        studentRepo.Delete(student);
+                        await studentRepo.SaveChangesAsync();
+                    }
                     var userRole = await userRoleRepoExtra.GetAsync(model.User.Id, roleId);
                     userRoleRepo.Delete(userRole);
                 }
@@ -244,6 +264,23 @@ namespace Demo.Controllers
             {
                 foreach (var roleId in model.RolesToAddIds)
                 {
+                    var role = await roleRepo.GetByIdAsync(roleId);
+                    var firstDept = await departmentExtraRepo.GetFirstDeptAsync();
+                    if (role.RoleName == "Student")
+                    {
+                        Student std = new Student()
+                        {
+                            Name = model.User.UserName,
+                            Email = model.User.Email,
+                            Age = model.User.Age,
+                            DeptNo = firstDept != null ? firstDept.DeptId : null,
+                            UserId = model.User.Id,
+                            Password = model.User.HashPassword,
+                        };
+                        await studentRepo.AddAsync(std);
+                        await studentRepo.SaveChangesAsync();
+                    }
+
                     var userRole = new UserRole() { UserId = model.User.Id, RoleId = roleId };
                     await userRoleRepo.AddAsync(userRole);
                 }

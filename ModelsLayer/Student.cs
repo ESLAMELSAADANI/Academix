@@ -21,8 +21,8 @@ namespace ModelsLayer.Models
         [NotMapped, Compare("Password", ErrorMessage = "Not Match!")]
         public string ConfirmPassword { get; set; }
         [ForeignKey("Department")]
-        [Required(ErrorMessage = "Please select a department!")]
-        public int DeptNo { get; set; }
+        //[Required(ErrorMessage = "Please select a department!")]
+        public int? DeptNo { get; set; }
         public Department? Department { get; set; }
         public List<StudentCourse> StudentCourses { get; set; } = new List<StudentCourse>();
 

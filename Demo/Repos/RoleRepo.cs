@@ -22,17 +22,14 @@ namespace Demo.Repos
         {
             return await dbContext.Roles.FirstOrDefaultAsync(ur => ur.RoleName.ToLower() == roleName);
         }
-
         public Task<List<Role>> GetUserAnotherRolesAsync(int userID)
         {
             return dbContext.Roles.Include(r => r.UserRoles).Where(r => !r.UserRoles.Any(ur => ur.UserId == userID)).ToListAsync();
         }
-
         public Task<List<Role>> GetUserRolesAsync(int userID)
         {
             return dbContext.Roles.Include(r => r.UserRoles).Where(r => r.UserRoles.Any(ur => ur.UserId == userID)).ToListAsync();
         }
-
         public async Task<bool> IsRoleExistAsync(string roleName,int id)
         {
             // When adding a new Role (Id == 0)

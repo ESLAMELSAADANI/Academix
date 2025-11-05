@@ -13,6 +13,7 @@ namespace Demo.Repos
         public StudentCourseRepo(ITIDbContext _dbContext) : base(_dbContext)
         {
         }
+
         public async Task<StudentCourse> GetByStdIdCrsIdAsync(int stdId, int crsId)
         {
             return await dbContext.StudentCourses.SingleOrDefaultAsync(sc => sc.StudentId == stdId && sc.CourseId == crsId);

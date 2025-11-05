@@ -18,17 +18,14 @@ namespace Demo.Repos
         {
             students.Add(entity);
         }
-
         public void Delete(Student entity)
         {
             students.Remove(entity);
         }
-
         public List<Student> GetAll()
         {
             return students;
         }
-
         public Student GetById(int id)
         {
             return students.SingleOrDefault(s => s.Id == id);
@@ -37,7 +34,6 @@ namespace Demo.Repos
         {
             throw new NotImplementedException();
         }
-
         public void Update(Student entity)
         {
             var student = students.SingleOrDefault(s => s.Id == entity.Id);

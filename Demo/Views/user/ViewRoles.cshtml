@@ -90,6 +90,9 @@
 					<form asp-action="DeleteSelectedRoles" method="post">
 						<input type="hidden" asp-for="User.Id" value="@Model.User.Id" />
 						<input type="hidden" asp-for="User.UserName" value="@Model.User.UserName" />
+						<input type="hidden" asp-for="User.Email" value="@Model.User.Email" />
+						<input type="hidden" asp-for="User.Age" value="@Model.User.Age" />
+						<input type="hidden" asp-for="User.HashPassword" value="@Model.User.HashPassword" />
 
 						<table class="table table-striped table-hover align-middle text-center">
 							<thead class="table-danger">
@@ -144,6 +147,9 @@
 					<form asp-action="AddSelectedRoles" method="post">
 						<input type="hidden" asp-for="User.Id" value="@Model.User.Id" />
 						<input type="hidden" asp-for="User.UserName" value="@Model.User.UserName" />
+						<input type="hidden" asp-for="User.Email" value="@Model.User.Email" />
+						<input type="hidden" asp-for="User.Age" value="@Model.User.Age" />
+						<input type="hidden" asp-for="User.HashPassword" value="@Model.User.HashPassword" />
 
 						<table class="table table-striped table-hover align-middle text-center">
 							<thead class="table-success">

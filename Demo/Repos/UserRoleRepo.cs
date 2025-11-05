@@ -24,7 +24,6 @@ namespace Demo.Repos
             };
             await dbContext.UserRoles.AddAsync(model);
         }
-
         public Task<UserRole> GetAsync(int userId, int roleId)
         {
             return dbContext.UserRoles.FirstOrDefaultAsync(ur => ur.RoleId == roleId && ur.UserId == userId);

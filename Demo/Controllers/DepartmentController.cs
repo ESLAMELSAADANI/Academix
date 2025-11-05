@@ -9,16 +9,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Demo.Controllers
 {
-    //[Route("hamada/{action=index}/{id:int:max(500)?}")]
-    //[Route("hamada/{action=index}/{id:int:max(500)?}")]
     [Authorize]
     public class DepartmentController : Controller
     {
-        //ITIDbContext dbContext = new ITIDbContext();
-        //===== Repository Design Pattern =======
-        //IEntityRepo<Department> departmentRepo = new DepartmentRepo();
-        //IIdExist departmentExist = new DepartmentRepo();
-
         //===== Dependency Injection ======
         EntityRepo<Department> departmentRepo;
         EntityRepo<Course> courseRepo;
@@ -33,16 +26,12 @@ namespace Demo.Controllers
             studentCourseRepo = _studentCourseRepo;
             StudentCourseRepoExtra = _StudentCourseRepoExtra;
         }
-        //[Route("hamada")]
-        public async Task<IActionResult> Index(/*[FromServices]IEntityRepo<Department> _departmentRepo*/)
+        public async Task<IActionResult> Index()
         {
-            //var model = dbContext.Department.ToList();
             var model = await departmentRepo.GetAllAsync();
-            //departmentRepo.Dispose();
             return View(model);
         }
-        //Show The Form Of Add New Department
-        [HttpGet] //ActionSelector say that this action work with Get Request Only
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -54,32 +43,23 @@ namespace Demo.Controllers
         {
             if (ModelState.IsValid)
             {
-                //dbContext.Department.Add(dept);
-                //dbContext.SaveChanges();
-                //return RedirectToAction("index");
-
                 await departmentRepo.AddAsync(dept);
                 await departmentRepo.SaveChangesAsync();
-                //departmentRepo.Dispose();
                 return RedirectToAction("index");
             }
             return View();
         }
-        // department/details/500   =>  500 will binded to the passed parameter id [Route System Behavior]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)//if user not enter value for id => /department/details
             {
                 return BadRequest();
             }
-            //var dept = dbContext.Department.SingleOrDefault(d => d.DeptId == id);
             var dept = await departmentRepo.GetByIdAsync(id.Value);
             if (dept == null)//if user enter id not match any dept in DB => /department/details/88888
             {
-                //departmentRepo.Dispose();
                 return NotFound();
             }
-            //departmentRepo.Dispose();
             return View(dept);
         }
         [HttpGet]
@@ -90,15 +70,11 @@ namespace Demo.Controllers
             {
                 return BadRequest();
             }
-            //var dept = dbContext.Department.SingleOrDefault(d => d.DeptId == id);
             var dept = await departmentRepo.GetByIdAsync(id.Value);
             if (dept == null)//if user enter id not match any dept in DB => /department/edit/88888
             {
-                //departmentRepo.Dispose();
                 return NotFound();
             }
-
-            //departmentRepo.Dispose();
             return View(dept);
         }
         [HttpPost]
@@ -107,19 +83,13 @@ namespace Demo.Controllers
         {
             if (ModelState.IsValid)
             {
-                //dbContext.Department.Update(dept);
-                //dbContext.SaveChanges();
-                //return RedirectToAction("index");
-
                 departmentRepo.Update(dept);
                 await departmentRepo.SaveChangesAsync();
-                //departmentRepo.Dispose();
                 return RedirectToAction("index");
             }
             var ddept = await departmentRepo.GetByIdAsync(dept.DeptId);
             return View(ddept);
         }
-        //For View Department Courses Details and can delete course
         public async Task<IActionResult> DepartmentCourses(int? id)
         {
             var department = await departmentRepoExtra.GetDepartmentByIdWithNavigationPropsAsync(id.Value);
@@ -217,15 +187,8 @@ namespace Demo.Controllers
                 return NotFound();
             if (ModelState.IsValid)
             {
-                //var dept = dbContext.Department.SingleOrDefault(d => d.DeptId == id);
-                //dbContext.Department.Remove(dept);
-                //dbContext.SaveChanges();
-                //return RedirectToAction("index");
-
-
                 departmentRepo.Delete(department);
                 await departmentRepo.SaveChangesAsync();
-                //departmentRepo.Dispose();
                 return RedirectToAction("index");
             }
             return RedirectToAction("index");
@@ -236,14 +199,8 @@ namespace Demo.Controllers
         {
             if (ModelState.IsValid)
             {
-                ////var dept = dbContext.Department.SingleOrDefault(d => d.DeptId == id);
-                //dbContext.Department.Remove(dept);
-                //dbContext.SaveChanges();
-                //return RedirectToAction("index");
-
                 departmentRepo.Delete(dept);
                 await departmentRepo.SaveChangesAsync();
-                //departmentRepo.Dispose();
                 return RedirectToAction("index");
             }
             return View("edit", dept);

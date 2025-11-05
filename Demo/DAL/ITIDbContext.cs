@@ -16,20 +16,11 @@ namespace Demo.DAL
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
-        //protected ITIDbContext()
-        //{
-        //}
 
         public ITIDbContext(DbContextOptions options) : base(options)
         {
 
         }
-
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=ITIMVC;Integrated Security=True;Trust Server Certificate=True");
-        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

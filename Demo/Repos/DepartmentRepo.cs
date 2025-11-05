@@ -10,6 +10,7 @@ namespace Demo.Repos
         bool IsIdExist(int id);
         Task<Department> DetailsAsync(int id);
         Task<Department> GetDepartmentByIdWithNavigationPropsAsync(int id);
+        Task<Department> GetFirstDeptAsync();
         Task SoftDeleteAsync(int id);
     }
 
@@ -19,31 +20,22 @@ namespace Demo.Repos
         {
         }
 
-        //ITIDbContext dbContext = new ITIDbContext();
-
-        ////====== Dependency Injection =======
-        //ITIDbContext dbContext;
-
-        //public DepartmentRepo(ITIDbContext _dbContext)//Constructor Injection [DIC Will Inject The Object Here]
-        //{
-        //    dbContext = _dbContext;
-        //}
-
         public async Task<Department> DetailsAsync(int id)
         {
             return await dbContext.Department.SingleOrDefaultAsync(d => d.DeptId == id);
         }
-
         public async Task<Department> GetDepartmentByIdWithNavigationPropsAsync(int id)
         {
             return await dbContext.Department.Include(d => d.Courses).Include(d => d.Students).ThenInclude(d => d.StudentCourses).SingleOrDefaultAsync(d => d.DeptId == id);
         }
-
+        public async Task<Department> GetFirstDeptAsync()
+        {
+            return await dbContext.Department.FirstOrDefaultAsync();
+        }
         public bool IsIdExist(int id)
         {
             return dbContext.Department.Any(d => d.DeptId == id);
         }
-
         public async Task SoftDeleteAsync(int id)
         {
             var dept = dbContext.Department.Include(d => d.Students).SingleOrDefault(d => d.DeptId == id);

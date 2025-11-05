@@ -33,7 +33,6 @@ namespace Demo.Controllers
         {
             return View();
         }
-
         public IActionResult Register()
         {
             return View();
@@ -93,29 +92,6 @@ namespace Demo.Controllers
 
                     return RedirectToAction("index", "home");
                 }
-                //if (model.UserName == "eslam" && model.Password == "123456")
-                //{
-                //    //if exist in DB
-                //    //Store his data in cookies to use them in subrequests after he login to know him as logged in person [Using Claims]
-
-                //    // Step 1: Create claims
-                //    List<Claim> claims = new List<Claim>()
-                //    {
-                //        new Claim(ClaimTypes.Name, model.UserName),
-                //        new Claim(ClaimTypes.Email, model.Email),
-                //        new Claim(ClaimTypes.Role, "Admin")
-                //    };
-
-                //    // Step 2: Create Identity
-                //    ClaimsIdentity identity = new ClaimsIdentity(claims, "MyCookieAuth");
-
-                //    // Step 3: Create Principal
-                //    ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-
-                //    // Step 4: Sign in (store info in cookie)
-                //    await HttpContext.SignInAsync("MyCookieAuth", principal);//Cookie that contain claims Created Here in this line.
-                //    return RedirectToAction("index", "home");
-                //}
             }
             //if  ModelState not valid || user doesn't exist
             ModelState.AddModelError("", "Invalid Credentials!");
@@ -129,6 +105,6 @@ namespace Demo.Controllers
         public IActionResult AccessDenied()
         {
             return View();
-        }
+        } 
     }
 }

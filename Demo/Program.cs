@@ -47,8 +47,8 @@ namespace Demo
             builder.Services.AddDbContext<ITIDbContext>(options =>
             {
                 //options.UseSqlServer("Data Source=.;Initial Catalog=ITIMVC;Integrated Security=True;Trust Server Certificate=True");
-                //options.UseSqlServer(builder.Configuration.GetConnectionString("ITIMVC_Conn"));//For Localhost
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("ITIMVC_Conn"));//For Localhost
+                //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));//For Production
             }/*,ServiceLifetime.Singleton*/);
             var app = builder.Build();
 
